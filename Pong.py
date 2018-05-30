@@ -25,6 +25,7 @@ def bot():
 
 player()
 bot()
+xchange = 0
 pygame.display.flip()
 
 clock = pygame.time.Clock()
@@ -33,7 +34,21 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-        elif event.type == pygame
+        elif event.type == pygame.KEYDOWN:
+            if event.type == pygame.K_SPACE:
+                pause = True
+            if event.key == pygame.K_UP:
+                xchange = 3
+            if event.key == pygame.K_DOWN:
+                xchange = -3
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_UP:
+                xchange = 0
+            if event.key == pygame.K_DOWN:
+                xchange = 0
+        px = px + xchange
+        pygame.display.flip()
+        clock.tick(60)
         
         
         
