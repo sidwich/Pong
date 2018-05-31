@@ -9,9 +9,11 @@ screen = pygame.display.set_mode (size)
 pygame.display.set_caption('PONG')
 
 px = 250
+p2x = 250
 bx = 600
 by = 300
-xchange = 0
+xchange1 = 0
+xchange2 = 0
 def p1():
     global px
     py = 45
@@ -20,11 +22,11 @@ def p1():
     pygame.draw.rect(screen, white, [py, px, pw, pl])
 
 def p2():
+    global p2x
     by = 1127
-    bx = 250
     bw = 25
     bl = 120
-    pygame.draw.rect(screen, white, [by, bx, bw, bl])
+    pygame.draw.rect(screen, white, [by, p2x, bw, bl])
 
 def ball():
     global bx, by
@@ -39,19 +41,31 @@ while not done:
         elif event.type == pygame.KEYDOWN:
             if event.type == pygame.K_SPACE:
                 pause = True
-            if event.key == pygame.K_DOWN:
-                xchange = 5
+            if event.key == pygame.K_s:
+                xchange1 = 5
+            if event.key == pygame.K_w:
+                xchange1 = -5
             if event.key == pygame.K_UP:
-                xchange = -5
+                xchange2 = -5
+            if event.key == pygame.K_DOWN:
+                xchange2 = 5
         elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_w:
+                xchange1 = 0
+            if event.key == pygame.K_s:
+                xchange1 = 0
             if event.key == pygame.K_UP:
-                xchange = 0
+                xchange2 = 0
             if event.key == pygame.K_DOWN:
-                xchange = 0
+                xchange2 = 0
     if px <= 600 - 120 or px >= 0:
-        px = px + xchange
+        px = px + xchange1
     else:
         px = px
+    if p2x <= 600 - 120 or p2x >= 0:
+        p2x = p2x + xchange2
+    else:
+        p2x = p2x
     screen.fill(black)
     p1()
     p2()
