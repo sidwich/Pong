@@ -9,24 +9,26 @@ screen = pygame.display.set_mode (size)
 pygame.display.set_caption('PONG')
 
 px = 250
-def player():
+bx = 600
+by = 300
+xchange = 0
+def p1():
     global px
     py = 45
     pw = 25
     pl = 120
     pygame.draw.rect(screen, white, [py, px, pw, pl])
 
-def bot():
+def p2():
     by = 1127
     bx = 250
     bw = 25
     bl = 120
     pygame.draw.rect(screen, white, [by, bx, bw, bl])
 
-
-
-xchange = 0
-
+def ball():
+    global bx, by
+    pygame.draw.ellipse(screen, white, [bx, by, 100, 100])
 
 clock = pygame.time.Clock()
 done = False
@@ -51,7 +53,8 @@ while not done:
     else:
         px = px
     screen.fill(black)
-    player()
-    bot()
+    p1()
+    p2()
+    ball()
     pygame.display.update()
     clock.tick(60)
