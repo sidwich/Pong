@@ -1,3 +1,4 @@
+
 import pygame
 import random
 pygame.init()
@@ -8,25 +9,25 @@ size = (1200, 600)
 screen = pygame.display.set_mode (size)
 pygame.display.set_caption('PONG')
 
-px = 250
+p1x = 250
 p2x = 250
 bx = 600
 by = 300
 xchange1 = 0
 xchange2 = 0
 def p1():
-    global px
-    py = 45
-    pw = 25
-    pl = 120
-    pygame.draw.rect(screen, white, [py, px, pw, pl])
+    global p1x
+    p1y = 45
+    p1w = 25
+    p1l = 120
+    pygame.draw.rect(screen, white, [p1y, p1x, p1w, p1l])
 
 def p2():
     global p2x
-    by = 1127
-    bw = 25
-    bl = 120
-    pygame.draw.rect(screen, white, [by, p2x, bw, bl])
+    p2y = 1127
+    p2w = 25
+    p2l = 120
+    pygame.draw.rect(screen, white, [p2y, p2x, p2w, p2l])
 
 def ball():
     global bx, by
@@ -58,10 +59,10 @@ while not done:
                 xchange2 = 0
             if event.key == pygame.K_DOWN:
                 xchange2 = 0
-    if px <= 600 - 120 or px >= 0:
-        px = px + xchange1
+    if p1x <= 600 - 120 or p1x >= 0:
+        p1x = p1x + xchange1
     else:
-        px = px
+        p1x = p1x
     if p2x <= 600 - 120 or p2x >= 0:
         p2x = p2x + xchange2
     else:
@@ -72,3 +73,4 @@ while not done:
     ball()
     pygame.display.update()
     clock.tick(60)
+    
