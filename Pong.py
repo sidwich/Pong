@@ -11,8 +11,8 @@ pygame.display.set_caption('PONG')
 
 p1x = 250
 p2x = 250
-bx = 600
-by = 300
+by = 600
+bx = 300
 xchange1 = 0
 xchange2 = 0
 def p1():
@@ -31,7 +31,7 @@ def p2():
 
 def ball():
     global bx, by
-    pygame.draw.ellipse(screen, white, [bx, by, 100, 100])
+    pygame.draw.ellipse(screen, white, [by, bx, 30, 30])
 
 clock = pygame.time.Clock()
 done = False
@@ -59,11 +59,11 @@ while not done:
                 xchange2 = 0
             if event.key == pygame.K_DOWN:
                 xchange2 = 0
-    if p1x <= 600 - 120 or p1x >= 0:
+    if p1x <= 600 or p1x >= 0:
         p1x = p1x + xchange1
     else:
         p1x = p1x
-    if p2x <= 600 - 120 or p2x >= 0:
+    if p2x <= 600 or p2x >= 0:
         p2x = p2x + xchange2
     else:
         p2x = p2x
@@ -73,4 +73,6 @@ while not done:
     ball()
     pygame.display.update()
     clock.tick(60)
-    
+
+
+
