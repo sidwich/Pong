@@ -26,15 +26,13 @@ xchange2 = 0
 clock = pygame.time.Clock()
 
 
-def p1():
-    global p1x
+def p1(): 
     p1y = 45
     p1w = 25
     p1l = 120
     pygame.draw.rect(screen, white, [p1y, p1x, p1w, p1l])
 
 def p2():
-    global p2x
     p2y = 1127
     p2w = 25
     p2l = 120
