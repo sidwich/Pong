@@ -13,6 +13,7 @@ quitimage = pygame.transform.scale(pygame.image.load('quit.png'),(200, 100))
 pauseimage = pygame.transform.scale(pygame.image.load('resume.png'),(200, 100))
 intro = True
 paused = False
+done = False
 pygame.display.set_caption('PONG')
 
 p1x = 250
@@ -23,7 +24,7 @@ xchange1 = 0
 xchange2 = 0
 
 clock = pygame.time.Clock()
-done = False
+
 
 def p1():
     global p1x
@@ -107,7 +108,7 @@ def game_loop():
                 quit()
             elif event.type == pygame.KEYDOWN:
                 if event.type == pygame.K_SPACE:
-                    pause = True
+                    paused = True
                 if event.key == pygame.K_s:
                     xchange1 = 5
                 if event.key == pygame.K_w:
@@ -117,6 +118,8 @@ def game_loop():
                 if event.key == pygame.K_DOWN:
                     xchange2 = 5
             elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:
+                    pause()
                 if event.key == pygame.K_w:
                     xchange1 = 0
                 if event.key == pygame.K_s:
