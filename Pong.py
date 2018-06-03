@@ -49,15 +49,14 @@ def unpause():
 def pause():
     global  paused
     while paused == True:
+        for pausemenu in pygame.event.get():
+            if pausemenu.type == pygame.QUIT:
+                pygame.quit()
+                quit()
         screen.fill(black)
         screen.blit(titlename, (300, 50))
         button(pauseimage, (1200 - 200) / 2, 300, 200, 100, black, black, unpause)
         button(quitimage, (1200 - 200) / 2, 400, 200, 100, black, black, quit)
-        for startmenu in pygame.event.get():
-            if startmenu.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-
         pygame.display.update()
         clock.tick(60)
 
@@ -98,15 +97,16 @@ def intro():
 
 
 def game_loop():
-    global p1x, p2x, xchange2, xchange1, done, pause
+    global p1x, p2x, xchange2, xchange1, done, paused
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
             elif event.type == pygame.KEYDOWN:
-                if event.type == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE:
                     paused = True
+                    pause()
                 if event.key == pygame.K_s:
                     xchange1 = 5
                 if event.key == pygame.K_w:
@@ -116,8 +116,6 @@ def game_loop():
                 if event.key == pygame.K_DOWN:
                     xchange2 = 5
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_SPACE:
-                    pause()
                 if event.key == pygame.K_w:
                     xchange1 = 0
                 if event.key == pygame.K_s:
