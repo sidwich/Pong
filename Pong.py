@@ -11,6 +11,13 @@ titlename = pygame.image.load('PONGNAME.png')
 startimage = pygame.transform.scale(pygame.image.load('start.png'),(200,100))
 quitimage = pygame.transform.scale(pygame.image.load('quit.png'),(200, 100))
 pauseimage = pygame.transform.scale(pygame.image.load('resume.png'),(200, 100))
+restartimage = pygame.transform.scale(pygame.image.load('restart.png'),(200, 100))
+intro = True
+paused = False
+done = False
+moving = False
+p1s = 0               #player1 score
+p2s = 0               #player2 score
 intro = True
 paused = False
 done = False
@@ -20,6 +27,8 @@ p1x = 250
 p2x = 250
 bx = 300
 by = 600
+p1y = 45
+p2y = 1127
 xchange1 = 0
 xchange2 = 0
 
@@ -38,8 +47,12 @@ def p2():
     p2l = 120
     pygame.draw.rect(screen, white, [p2y, p2x, p2w, p2l])
 
-def ball():
-    global bx, by
+def ball(by,bx):
+    pygame.draw.ellipse(screen, white, [by, bx, 30, 30])
+
+
+
+def ball(by, bx):
     pygame.draw.ellipse(screen, white, [by, bx, 40, 40])
 
 def unpause():
@@ -47,12 +60,21 @@ def unpause():
     paused = False
 
 def pause():
-    global  paused
+
+    global  paused, moving
     while paused == True:
         for pausemenu in pygame.event.get():
             if pausemenu.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            if pausemenu.type == pygame.KEYDOWN:
+                if pausemenu.key == pygame.K_SPACE:
+                    unpause()
+
+
+        button(pauseimage, (1200 - 200) / 2, 200, 200, 100, black, black, unpause)
+        button(quitimage, (1200 - 200) / 2, 400, 200, 100, black, black, quit)
+        button(restartimage, (1200-200)/2, 300, 200, 100, black, black, game_loop)
         screen.fill(black)
         screen.blit(titlename, (300, 50))
         button(pauseimage, (1200 - 200) / 2, 300, 200, 100, black, black, unpause)
@@ -92,12 +114,39 @@ def intro():
         pygame.display.update()
 
 
+def game_loop():
+    global p1x, p2x, xchange2, xchange1, done, paused, moving, p1s, p2s
+
+    check = random.randint(0, 1)
+    if check == 0:
+        by_change = 10
+        bx_change = random.randint(-10, 10)
+    if check == 1:
+        by_change = -10
+        bx_change = random.randint(-10, 10)
+
+    if check == 0:
+        by = p1y + 27
+        bx = p1x + 45
+    else:
+        by = p2y - 32
+        bx = p2x + 45
+    while not done:
+        for event in pygame.event.get():
+            if moving == False:
+                if event.type == pygame.KEYDOWN:
+                    if check == 0:
+                        if event.key == pygame.K_s or event.key == pygame.K_w:
+                            moving = True
+                    if check == 1:
+                        if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+                            moving = True
 
 
 
 
 def game_loop():
-    global p1x, p2x, xchange2, xchange1, done, paused
+    global p1x, p2x, xchange2, xchange1, done, paused, moving, bx, by, p1s, p2s
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -124,18 +173,48 @@ def game_loop():
                     xchange2 = 0
                 if event.key == pygame.K_DOWN:
                     xchange2 = 0
-        if p1x <= 600 - 120 or p1x >= 0:
-            p1x = p1x + xchange1
-        else:
-            p1x = p1x
-        if p2x <= 600 - 120 or p2x >= 0:
-            p2x = p2x + xchange2
-        else:
-            p2x = p2x
+
+        p1x = p1x + xchange1
+        p2x = p2x + xchange2
+
+
+
+        if moving == True:
+            by += by_change
+            bx += bx_change
+
+        if bx >= 600 - 120 or bx <= 0:
+            bx_change = - bx_change
+        if by < 70:
+            if p1x > bx and bx + 30 < p1x+120:
+                p2s += 1
+                moving = 0
+            else:
+                by_change = -by_change
+                bx_change = random.randint(-10, 10)
+        if by > 1127-30:
+            if p2x > bx and bx+30 < p2x+120:
+                p1s += 1
+                moving = 0
+            else:
+                by_change = -by_change
+                bx_change = random.randint(-10, 10)
+
+
+        if p1x > 600 - 120:
+            p1x = 600 - 120
+        if p1x < 0:
+            p1x = 0
+        if p2x > 600 - 120:
+            p2x = 600 -120
+        if p2x < 0:
+            p2x = 0
+
         screen.fill(black)
         p1()
         p2()
-        ball()
+        ball(by,bx)
+
         pygame.display.update()
         clock.tick(60)
 
