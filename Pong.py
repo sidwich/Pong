@@ -75,10 +75,6 @@ def pause():
         button(pauseimage, (1200 - 200) / 2, 200, 200, 100, black, black, unpause)
         button(quitimage, (1200 - 200) / 2, 400, 200, 100, black, black, quit)
         button(restartimage, (1200-200)/2, 300, 200, 100, black, black, game_loop)
-        screen.fill(black)
-        screen.blit(titlename, (300, 50))
-        button(pauseimage, (1200 - 200) / 2, 300, 200, 100, black, black, unpause)
-        button(quitimage, (1200 - 200) / 2, 400, 200, 100, black, black, quit)
         pygame.display.update()
         clock.tick(60)
 
@@ -141,14 +137,6 @@ def game_loop():
                     if check == 1:
                         if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                             moving = True
-
-
-
-
-def game_loop():
-    global p1x, p2x, xchange2, xchange1, done, paused, moving, bx, by, p1s, p2s
-    while not done:
-        for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
