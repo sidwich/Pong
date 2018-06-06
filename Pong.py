@@ -5,6 +5,7 @@ pygame.init()
 white = (255, 255, 255)
 black = (0, 0, 0)
 green = (100, 124, 100)
+font = pygame.font.SysFont('Microsoft YaHei', 48)
 size = (1200, 600)
 screen = pygame.display.set_mode(size)
 titlename = pygame.image.load('PONGNAME.png')
@@ -77,6 +78,12 @@ def pause():
         button(restartimage, (1200-200)/2, 300, 200, 100, black, black, game_loop)
         pygame.display.update()
         clock.tick(60)
+
+def scoreboard():
+    score1 = font.render(p1s, False, green)
+    score2 = font.render(p2s, False, green)
+    screen.blit(score1, (200, 100))
+    screen.blit(score2, (700, 100))
 
 
 def button(img,x,y,w,h,ic,ac,action = None):
@@ -175,15 +182,19 @@ def game_loop():
             bx_change = - bx_change
         if by < 70:
             if p1x > bx and bx + 30 < p1x+120:
+                by -= 10
+                bx -= 10
                 p2s += 1
-                moving = 0
+                moving = False
             else:
                 by_change = -by_change
                 bx_change = random.randint(-10, 10)
         if by > 1127-30:
             if p2x > bx and bx+30 < p2x+120:
+                by +=10
+                bx += 10
                 p1s += 1
-                moving = 0
+                moving = False
             else:
                 by_change = -by_change
                 bx_change = random.randint(-10, 10)
@@ -199,6 +210,7 @@ def game_loop():
             p2x = 0
 
         screen.fill(black)
+        scoreboard()
         p1()
         p2()
         ball(by,bx)
