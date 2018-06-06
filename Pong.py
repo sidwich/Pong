@@ -51,17 +51,11 @@ def p2():
 def ball(by,bx):
     pygame.draw.ellipse(screen, white, [by, bx, 30, 30])
 
-
-
-def ball(by, bx):
-    pygame.draw.ellipse(screen, white, [by, bx, 40, 40])
-
 def unpause():
     global paused
     paused = False
 
 def pause():
-
     global  paused, moving
     while paused == True:
         for pausemenu in pygame.event.get():
@@ -70,7 +64,7 @@ def pause():
                 quit()
             if pausemenu.type == pygame.KEYDOWN:
                 if pausemenu.key == pygame.K_SPACE:
-                    unpause()
+                    paused = False
 
 
         button(pauseimage, (1200 - 200) / 2, 200, 200, 100, black, black, unpause)
@@ -119,7 +113,9 @@ def intro():
 
 def game_loop():
     global p1x, p2x, xchange2, xchange1, done, paused, moving, p1s, p2s
-
+    p1s = 0
+    p2s = 0
+    moving = False
     check = random.randint(0, 1)
     if check == 0:
         by_change = 10
@@ -152,13 +148,13 @@ def game_loop():
                     paused = True
                     pause()
                 if event.key == pygame.K_s:
-                    xchange1 = 5
+                    xchange1 = 7
                 if event.key == pygame.K_w:
-                    xchange1 = -5
+                    xchange1 = -7
                 if event.key == pygame.K_UP:
-                    xchange2 = -5
+                    xchange2 = -7
                 if event.key == pygame.K_DOWN:
-                    xchange2 = 5
+                    xchange2 = 7
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_w:
                     xchange1 = 0
@@ -180,25 +176,28 @@ def game_loop():
 
         if bx >= 600 - 120 or bx <= 0:
             bx_change = - bx_change
-        if by < 70:
-            if p1x > bx and bx + 30 < p1x+120:
-                by -= 10
-                bx -= 10
-                p2s += 1
-                moving = False
+        if by <= 70:
+            if p1x >= bx or bx + 40 >= p1x+140:            
+                if by < 0:        
+                    by = p2y - 32
+                    bx = p2x + 45
+                    p2s += 1
+                    moving = False
+                    check = 1
             else:
                 by_change = -by_change
                 bx_change = random.randint(-10, 10)
-        if by > 1127-30:
-            if p2x > bx and bx+30 < p2x+120:
-                by +=10
-                bx += 10
-                p1s += 1
-                moving = False
+        if by >= 1127-40:
+            if p2x >= bx or bx + 40 >= p2x+140:               
+                if by > 1200:            
+                    by = p1y + 27
+                    bx = p1x + 45
+                    p1s += 1
+                    moving = False
+                    check= 0
             else:
                 by_change = -by_change
                 bx_change = random.randint(-10, 10)
-
 
         if p1x > 600 - 120:
             p1x = 600 - 120
@@ -216,6 +215,10 @@ def game_loop():
         ball(by,bx)
 
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(60)    
 
 intro()
+
+
+#球的反弹问题， 有一部分物理模型无效
+#p2发球问题， 出现glich
