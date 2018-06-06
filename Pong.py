@@ -5,7 +5,7 @@ pygame.init()
 white = (255, 255, 255)
 black = (0, 0, 0)
 green = (100, 124, 100)
-font = pygame.font.SysFont('Microsoft YaHei', 48)
+font = pygame.font.SysFont('Microsoft YaHei', 72)
 size = (1200, 600)
 screen = pygame.display.set_mode(size)
 titlename = pygame.image.load('PONGNAME.png')
@@ -80,10 +80,10 @@ def pause():
         clock.tick(60)
 
 def scoreboard():
-    score1 = font.render(p1s, False, green)
-    score2 = font.render(p2s, False, green)
-    screen.blit(score1, (200, 100))
-    screen.blit(score2, (700, 100))
+    score1 = font.render(str(p1s), True, green)
+    score2 = font.render(str(p2s), True, green)
+    screen.blit(score1, (200, 50))
+    screen.blit(score2, (1000, 50))
 
 
 def button(img,x,y,w,h,ic,ac,action = None):
