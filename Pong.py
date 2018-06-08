@@ -5,6 +5,7 @@ pygame.init()
 white = (255, 255, 255)
 black = (0, 0, 0)
 green = (100, 124, 100)
+orange = (255, 117, 58)
 font = pygame.font.SysFont('Microsoft YaHei', 72)
 font_win = pygame.font.SysFont('Microsoft YaHei', 256)
 size = (1200, 600)
@@ -83,10 +84,10 @@ def winner_winner_chicken_dinner():
                 pygame.quit()
                 quit()
         if p1s >= 2:
-            win1 = font_win.render("P1WIN!", True, green)
+            win1 = font_win.render("P1WIN!", True, orange)
             screen.blit(win1, (300, 50))
         if p2s >= 2:
-            win2 = font_win.render("P2WIN!", True, green)
+            win2 = font_win.render("P2WIN!", True, orange)
             screen.blit(win2, (300, 50))
         p1()
         p2()
@@ -253,3 +254,5 @@ intro()
 
 #球的反弹问题， 有一部分物理模型无效
 #p2发球问题， 出现glich
+#得分历史
+#音效（静音？）
