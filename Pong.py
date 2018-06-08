@@ -77,8 +77,7 @@ def pause():
 
 def winner_winner_chicken_dinner():
     global p1s, p2s, winner
-    while winner == True:
-        screen.fill(black)
+    while winner == True:        
         for pausemenu in pygame.event.get():
             if pausemenu.type == pygame.QUIT:
                 pygame.quit()
@@ -139,6 +138,7 @@ def game_loop():
     p1s = 0
     p2s = 0
     moving = False
+    winner = False
     check = random.randint(0, 1)
     if check == 0:
         by_change = 10
@@ -236,7 +236,8 @@ def game_loop():
 
         if p1s >= 2 or p2s >= 2:
             winner = True
-
+            winner_winner_chicken_dinner()
+        
         screen.fill(black)
         scoreboard()
         p1()
@@ -252,4 +253,3 @@ intro()
 
 #球的反弹问题， 有一部分物理模型无效
 #p2发球问题， 出现glich
-#胜利界面的restart没用
