@@ -89,7 +89,7 @@ def winround():
             if pausemenu.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-        w2r = font.render(str(p2r), True, orange)
+        w2r = font.render(str(p1r), True, orange)
         w1r = font.render(str(p2r), True, orange)
         screen.fill(black)
 
