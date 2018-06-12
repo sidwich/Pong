@@ -83,7 +83,7 @@ def pause():
         clock.tick(60)
 
 def winround():
-    global p1s, p2s, winner, p1r, p2r
+    global p1s, p2s, winner, p1r, p2r, p1l, p2l
     while winner == True:
         for pausemenu in pygame.event.get():
             if pausemenu.type == pygame.QUIT:
@@ -96,12 +96,11 @@ def winround():
         if p1s >= 2:
             win1 = font_win.render("P1WIN!", True, orange)
             screen.blit(win1, (300, 50))
-            p1r += 1
+            p2l = 50
         if p2s >= 2:
             win2 = font_win.render("P2WIN!", True, orange)
             screen.blit(win2, (300, 50))
-            p2r += 1
-
+            p1l = 50
         screen.blit(w2r, (400, 500))
         screen.blit(w1r, (800, 500))
         p1()
@@ -176,7 +175,7 @@ def intro():
 
 
 def game_loop():
-    global p1x, p2x, xchange2, xchange1, done, paused, moving, p1s, p2s, winner
+    global p1x, p2x, xchange2, xchange1, done, paused, moving, p1s, p2s, winner, p1r, p2r, p1l, p2l
     p1s = 0
     p2s = 0
     moving = False
@@ -274,8 +273,16 @@ def game_loop():
             p2x = 0
 
         if p1s >= 2 or p2s >= 2:
-            winner = True
-            winround()
+            if p1s >= 2:
+                p1r += 1
+                winner = True
+                winround()
+                p2l = 80
+            if p2s >= 2:
+                p2r += 1
+                winner = True
+                winround()
+                p1l = 80
 
         screen.fill(black)
         scoreboard()
