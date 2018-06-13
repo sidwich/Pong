@@ -283,7 +283,7 @@ def game_loop():
                 winner = True
                 winround()
                 p1l = 80
-
+ 
         screen.fill(black)
         scoreboard()
         p1()
