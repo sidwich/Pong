@@ -48,7 +48,7 @@ v_high_score2 = 0
 
 clock = pygame.time.Clock()                                         #define clock
 
-def highScore():
+def highScore(p1s,p2s):
     global high_score1, high_score2
     config = open ("highScore.txt", "r")
     configDataStr = config.readlines()
@@ -56,7 +56,7 @@ def highScore():
     high_score2 = int(configDataStr[1])
 
 #set funtion: rewrite high score
-def rewrite_highScore():
+def rewrite_highScore(p1s,p2s):
     global v_high_score1,v_high_score2
     config = open("highScore.txt", "r+")
     if p1s > high_score1:
@@ -135,7 +135,7 @@ def winround():                                                        #set to g
         p1()
         p2()
         scoreboard()
-        rewrite_highScore()
+        rewrite_highScore(p1s, p2s)
         button(quitimage, (1200 - 200) / 2, 400, 200, 100, black, black, quit)
         button(nextimage, (1200 - 200) / 2, 300, 200, 100, black, black, nextlevel)
         pygame.display.update()
